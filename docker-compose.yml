@@ -1,0 +1,11 @@
+services:
+  ollama-proxy:
+    image: ollama-proxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    env_file:
+      - .env.secret
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

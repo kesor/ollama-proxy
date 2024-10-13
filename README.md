@@ -148,6 +148,16 @@ named `gpt-4o`, making it easier to reference in API requests.
 - **`40-entrypoint-cloudflared.sh`**: Entry point script to install and start Cloudflare Tunnel.
 - **`.env.secret-example`**: Example environment file containing placeholders for sensitive variables.
 
+## Privacy Considerations
+
+This project relies on Cloudflare as a middleman for the Cloudflare Tunnel. If you trust Cloudflare, the setup ensures that no one else can eavesdrop on your traffic or access your data.
+
+- **SSL Encryption**: The public endpoint opened by Cloudflare has SSL enabled, meaning that any communication between your computer and this endpoint is encrypted.
+- **Cloudflare Tunnel Encryption**: Requests received at the Cloudflare endpoint are securely forwarded to your local Nginx instance through Cloudflare's tunnel service, which also encrypts this communication.
+- **Local Network Traffic**: Inside the container, requests between the Cloudflare tunnel process and Nginx, as well as between Nginx and the Ollama process, occur over the local device network in clear text over HTTP. Since this traffic stays within the local network, it is not exposed externally.
+
+If privacy beyond this is a concern, note that local traffic within the container is not encrypted, although it is isolated from external networks.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

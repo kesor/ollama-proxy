@@ -20,5 +20,5 @@ RUN curl -# -L --output cloudflared.deb \
 
 RUN mkdir -p /etc/nginx/templates
 COPY 40-entrypoint-cloudflared.sh /docker-entrypoint.d/
+RUN chmod +x /docker-entrypoiny.d/40-entrypoint-cloudflared.sh
 COPY nginx-default.conf.template /etc/nginx/templates/default.conf.template
-

@@ -13,8 +13,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists
 
-RUN curl -# -L --output cloudflared.deb \
-  https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb \
+# Determine architecture and download the appropriate cloudflared package
+RUN ARCH=$(dpkg --print-architecture) \
+  && if [ "$ARCH" = "amd64" ]; then \
+       curl -# -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb; \
+     elif [ "$ARCH" = "arm64" ]; then \
+       curl -# -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb; \
+     else \
+       echo "Unsupported architecture: $ARCH"; exit 1; \
+     fi \
   && dpkg -i cloudflared.deb \
   && rm cloudflared.deb
 

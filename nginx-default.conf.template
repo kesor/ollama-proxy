@@ -1,17 +1,28 @@
+# Define the expected Authorization header
+map $http_authorization $bearer_match {
+    default 0;
+    "Bearer ${OLLAMA_SECRET_API_KEY}" 1;
+}
+
+# Determine if authentication is required
+map $request_method$bearer_match $auth_required {
+    default 1;   # Require authentication by default
+    ~^OPTIONS0 0; # Allow OPTIONS requests without authentication
+    ~^.*1 0;     # Allow any method if bearer_match is 1
+}
+
 server {
     listen 80;
     server_name localhost;
 
+    # Return 401 for unauthorized requests
+    if ($auth_required) {
+        return 401;
+    }
+
     location / {
-        set $expected_token "Bearer ${OLLAMA_SECRET_API_KEY}";
-
-        # Check if the Authorization header is present and matches the expected token
-        if ($http_authorization != $expected_token) {
-            return 401;
-        }
-
         # Handle preflight OPTIONS requests
-        if ($request_method = OPTIONS ) {
+        if ($request_method = OPTIONS) {
             # Add CORS headers for preflight request
             add_header 'Access-Control-Allow-Origin' "$http_origin" always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;

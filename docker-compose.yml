@@ -9,3 +9,5 @@ services:
       - .env.secret
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    cap_add:
+      - NET_ADMIN

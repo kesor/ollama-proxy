@@ -32,7 +32,7 @@ over the internet using a Cloudflare Tunnel.
 ## Prerequisites
 
 - **Docker and Docker Compose**: Ensure Docker and Docker Compose are installed on your system.
-- **Cloudflare Account**: Required to obtain a Cloudflare Tunnel token.
+- **Cloudflare Account**: Required to get a Cloudflare Tunnel token. Review the [cloudflare doc](./docs/cloudflare.md) for more details.
 - **Ollama**: Install and run [Ollama](https://github.com/jmorganca/ollama) on your host machine at port `11434`.
 
 ## Installation
@@ -65,7 +65,7 @@ over the internet using a Cloudflare Tunnel.
 
 - **Environment Variable**: `OLLAMA_SECRET_API_KEY`
 - **Usage**: This token is required in the `Authorization` header for clients to access the Ollama service through the proxy.
-- **Format**: Typically starts with `sk-` followed by your made up secret key.
+- **Format**: Typically starts with `sk-` followed by your made-up secret key.
 
 ### Cloudflare Tunnel Token
 
@@ -99,7 +99,7 @@ The project uses a `.env.secret` file to manage sensitive environment variables.
    docker-compose logs
    ```
 
-2. **Access the Ollama Service**
+3. **Access the Ollama Service**
 
    - The service is now exposed over the internet via the Cloudflare Tunnel.
    - Clients must include the correct `Authorization` header in their requests.
@@ -124,11 +124,11 @@ curl -i https://opxy.example.net/v1/chat/completions \
   }'
 ```
 
-Replace `your_made_up_ollama_secret_api_key` with your made up secret API key.
+Replace `your_made_up_ollama_secret_api_key` with your made-up secret API key.
 
 ## Renaming Ollama Models
 
-For systems that expect OpenAI's models to "be there", it is useful to
+For systems that expect OpenAI's models to "be there," it is useful to
 rename Ollama models by copying them to a new name using the Ollama CLI.
 
 For example:

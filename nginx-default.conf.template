@@ -1,3 +1,4 @@
+map_hash_bucket_size 128;
 # Define the expected Authorization header
 map $http_authorization $bearer_match {
     default 0;

@@ -41,6 +41,11 @@ update_cloudflared() {
         exit 1
     fi
     dpkg -i cloudflared.deb
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to install cloudflared.deb with dpkg."
+        rm -f cloudflared.deb
+        exit 1
+    fi
     rm cloudflared.deb
 }
 

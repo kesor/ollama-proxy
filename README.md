@@ -106,7 +106,22 @@ The project uses a `.env.secret` file to manage sensitive environment variables.
 
 ## Testing the Service
 
-You can test the setup using the following `curl` command:
+You can test the setup using the following methods:
+
+### Basic Connectivity Test
+
+For a simple connectivity test, you can use the `/api/version` endpoint:
+
+```bash
+curl https://opxy.example.net/api/version \
+  -H "Authorization: Bearer your_made_up_ollama_secret_api_key"
+```
+
+This endpoint provides a quick way to verify that the proxy is working and can connect to the Ollama service.
+
+### Full API Test
+
+For a complete API functionality test, you can use the `/v1/chat/completions` endpoint:
 
 ```bash
 curl -i https://opxy.example.net/v1/chat/completions \
@@ -124,7 +139,7 @@ curl -i https://opxy.example.net/v1/chat/completions \
   }'
 ```
 
-Replace `your_made_up_ollama_secret_api_key` with your made-up secret API key.
+Replace `your_made_up_ollama_secret_api_key` with your made-up secret API key in both examples.
 
 ## Renaming Ollama Models
 

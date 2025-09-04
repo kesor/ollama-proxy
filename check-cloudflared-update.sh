@@ -16,7 +16,18 @@ check_latest_version() {
 }
 
 get_current_version() {
-    cloudflared -v | head -n 1 | awk '{print $3}'
+    if ! command -v cloudflared >/dev/null 2>&1; then
+        echo "Error: cloudflared is not installed or not in PATH." >&2
+        exit 2
+    fi
+    version_output=$(cloudflared -v 2>/dev/null | head -n 1)
+    # Extract version using regex, expecting format like 'cloudflared version 2024.6.0 (build xyz)'
+    version=$(echo "$version_output" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
+    if [ -z "$version" ]; then
+        echo "Error: Unable to determine cloudflared version from output: $version_output" >&2
+        exit 3
+    fi
+    echo "$version"
 }
 
 update_cloudflared() {

@@ -27,6 +27,7 @@ over the internet using a Cloudflare Tunnel.
 - **Authentication**: Requires clients to provide a specific `Authorization` header to access the service.
 - **CORS Support**: Configured to handle Cross-Origin Resource Sharing (CORS) for web-based clients.
 - **Cloudflare Tunnel Integration**: Exposes the local Ollama service securely over the internet using Cloudflare Tunnel.
+- **Automatic Cloudflared Updates**: Optional automatic checking and updating of cloudflared to the latest version during container startup.
 - **Dockerized Setup**: Easily deployable using Docker and Docker Compose.
 
 ## Prerequisites
@@ -81,7 +82,12 @@ The project uses a `.env.secret` file to manage sensitive environment variables.
   ```bash
   CLOUDFLARE_TUNNEL_TOKEN="your_cloudflare_tunnel_token"
   OLLAMA_SECRET_API_KEY="your_made_up_ollama_secret_api_key"
+  CLOUDFLARED_AUTO_UPDATE="true"  # Optional: Enable automatic cloudflared updates
   ```
+
+#### Optional Environment Variables
+
+- **`CLOUDFLARED_AUTO_UPDATE`**: Set to `"true"` to enable automatic updates of cloudflared during container startup. If not set or set to any other value, the container will prompt for manual confirmation when updates are available.
 
 ## Usage
 
@@ -160,7 +166,8 @@ named `gpt-4o`, making it easier to reference in API requests.
 - **`Dockerfile`**: The Dockerfile used to build the Docker image.
 - **`docker-compose.yml`**: Docker Compose configuration file to set up the container.
 - **`nginx-default.conf.template`**: Template for the Nginx configuration file.
-- **`40-entrypoint-cloudflared.sh`**: Entry point script to install and start Cloudflare Tunnel.
+- **`40-entrypoint-cloudflared.sh`**: Entry point script to check for updates and start Cloudflare Tunnel.
+- **`check-cloudflared-update.sh`**: Script to check for and optionally update cloudflared to the latest version.
 - **`.env.secret-example`**: Example environment file containing placeholders for sensitive variables.
 
 ## Privacy Considerations

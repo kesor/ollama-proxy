@@ -29,3 +29,7 @@ RUN mkdir -p /etc/nginx/templates
 COPY 40-entrypoint-cloudflared.sh /docker-entrypoint.d/
 RUN chmod +x /docker-entrypoint.d/40-entrypoint-cloudflared.sh
 COPY nginx-default.conf.template /etc/nginx/templates/default.conf.template
+
+# Copy check-cloudflared-update.sh into the container
+COPY check-cloudflared-update.sh /check-cloudflared-update.sh
+RUN chmod +x /check-cloudflared-update.sh

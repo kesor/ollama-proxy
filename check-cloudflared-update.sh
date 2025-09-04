@@ -52,8 +52,10 @@ update_cloudflared() {
 # Main script logic
 latest_version=$(check_latest_version)
 current_version=$(get_current_version)
+# Strip leading 'v' from latest_version for comparison
+latest_version_numeric=$(echo "$latest_version" | sed 's/^v//')
 
-if [ "$latest_version" != "$current_version" ]; then
+if [ "$latest_version_numeric" != "$current_version" ]; then
     echo "A new version of cloudflared is available: $latest_version (current version: $current_version)"
     
     # Check for auto-update environment variable or interactive mode

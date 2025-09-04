@@ -62,13 +62,7 @@ if [ "$latest_version" != "$current_version" ]; then
         update_cloudflared
         echo "cloudflared has been updated to version $latest_version"
     else
-        read -p "Would you like to update to the latest version? (y/n): " choice
-        if [ "$choice" = "y" ]; then
-            update_cloudflared
-            echo "cloudflared has been updated to version $latest_version"
-        else
-            echo "cloudflared update skipped"
-        fi
+        echo "cloudflared update skipped. Set CLOUDFLARED_AUTO_UPDATE=true to enable automatic updates."
     fi
 else
     echo "cloudflared is already up to date (version: $current_version)"

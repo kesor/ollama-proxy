@@ -1,7 +1,18 @@
 #!/bin/sh
 
 check_latest_version() {
-    curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+    response=$(curl -s -f https://api.github.com/repos/cloudflare/cloudflared/releases/latest)
+    if [ $? -ne 0 ] || [ -z "$response" ]; then
+        echo "Error: Failed to fetch latest version info from GitHub." >&2
+        exit 2
+    fi
+    latest_version=$(echo "$response" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    # Validate version string (should start with 'v' and contain digits)
+    if ! echo "$latest_version" | grep -Eq '^v[0-9]+'; then
+        echo "Error: Malformed or missing version string in GitHub response." >&2
+        exit 3
+    fi
+    echo "$latest_version"
 }
 
 get_current_version() {
